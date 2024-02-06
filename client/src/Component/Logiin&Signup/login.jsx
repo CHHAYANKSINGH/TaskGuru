@@ -2,10 +2,15 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import styled from 'styled-components';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: '',
   });
 
@@ -17,9 +22,24 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+
+    try {
+      const response = await axios.post('http://localhost:8001/login', {
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (response.data === 'exist') {
+        console.log('Login successful!', response.data);
+        navigate('/')
+      } else {
+        console.error('Invalid password:', response);
+      }
+    } catch (error) {
+      console.error('Error during login:', error.response?.data || error.message);
+    }
   };
 
   return (
@@ -27,13 +47,13 @@ const Login = () => {
       <div className="login-form col-lg-3">
         <h2 className='text-center'>Login</h2>
         <Form onSubmit={handleSubmit}>
-          <Form.Group className='mb-3' controlId="formUsername">
-            <Form.Label>Username</Form.Label>
+          <Form.Group className='mb-3' controlId="formemail">
+            <Form.Label>Email</Form.Label>
             <Form.Control
-              type="text"
-              placeholder="Enter your username"
-              name="username"
-              value={formData.username}
+              type="email"
+              placeholder="Enter your Email"
+              name="email"
+              value={formData.email}
               onChange={handleChange}
             />
           </Form.Group>
@@ -52,7 +72,7 @@ const Login = () => {
           <Button variant="primary" type="submit">
             Login
           </Button>
-          <Button href='/register' className='ms-2' variant="primary" type="submit">
+          <Button href='/' className='ms-2' variant="primary" type="submit">
             Signup
           </Button>
         </Form>
@@ -60,7 +80,6 @@ const Login = () => {
     </Wrapper>
   );
 };
-
 
 const Wrapper = styled.section`
   .login-form{
@@ -70,5 +89,6 @@ const Wrapper = styled.section`
     padding: 20px;
     border-radius: 10px;
   }
-`
+`;
+
 export default Login;
