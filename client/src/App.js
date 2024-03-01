@@ -1,20 +1,16 @@
-// App.js
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Signup from './signup'; // Import the Signup component
-import Login from './login'; // Import the Signup component
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import Signup from './Component/Logiin&Signup/signup';
+import Login from './Component/Logiin&Signup/login';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <BrowserRouter>
-    <Routes>
-      <Route path='/register' element={<Signup />}></Route>
-      <Route path='/login' element={<Login />}></Route>
-        </Routes>
-        </BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Signup />} />
+        <Route path='/login' element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
