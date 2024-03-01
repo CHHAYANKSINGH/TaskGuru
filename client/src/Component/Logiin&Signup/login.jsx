@@ -72,7 +72,7 @@ const Login = () => {
           <Button variant="primary" type="submit">
             Login
           </Button>
-          <Button href='/' className='ms-2' variant="primary" type="submit">
+          <Button href='/signup' className='ms-2' variant="primary" type="submit">
             Signup
           </Button>
         </Form>
